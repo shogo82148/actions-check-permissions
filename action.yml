@@ -15,3 +15,5 @@ runs:
     - id: check
       run: ${{ github.action_path }}/check.sh
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
