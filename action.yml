@@ -1,0 +1,17 @@
+name: 'GitHub Token permission checker'
+description: 'checking the permissions of GitHub Token'
+inputs:
+  github-token:
+    description: 'Your GitHub Token'
+    required: true
+    default: '${{ github.token }}'
+outputs:
+  permission:
+    description: "If the token has write permission it is 'write', otherwise it is 'read'"
+    value: ${{ steps.check.outputs.permission }}
+runs:
+  using: "composite"
+  steps:
+    - id: check
+      run: ${{ github.action_path }}/check.sh
+      shell: bash

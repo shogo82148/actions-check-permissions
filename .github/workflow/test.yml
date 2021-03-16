@@ -1,0 +1,19 @@
+name: test
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: check
+        name: use the action
+        uses: ./
+
+      - name: show the result
+        run: |
+          echo ${{ steps.check.outputs.permission }}
