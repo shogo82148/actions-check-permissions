@@ -9,7 +9,7 @@ trap 'rm -rf "$TMPDIR"' EXIT
 STATUS_CODE=$(curl \
   -X POST \
   -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer $GITHUB_TOKEN" \
-  https://api.github.com/repos/shogo82148/actions-check-permissions/git/blobs \
+  "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/git/blobs" \
   -d '{"content":""}' \
   -o "$TMPDIR/result.json" \
   -w '%{http_code}' \
