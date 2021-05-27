@@ -5,6 +5,21 @@ set -ue
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
+# try to list matching references
+STATUS_CODE=$(curl \
+  -X GET \
+  -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer $GITHUB_TOKEN" \
+  "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/matching-refs/ref" \
+  -o "$TMPDIR/result.json" \
+  -w '%{http_code}' \
+  -sS )
+
+if [[ "$STATUS_CODE" != "200" ]]
+then
+    echo "::set-output name=permission::none"
+    exit 0
+fi
+
 # try to create empty blob
 STATUS_CODE=$(curl \
   -X POST \
