@@ -12,7 +12,7 @@ echo "checking read permission..."
 STATUS_CODE=$(curl \
   -X GET \
   -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/matching-refs/ref" \
+  "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/git/matching-refs/ref" \
   -o "$TMPDIR/result.json" \
   -w '%{http_code}' \
   -sS )
