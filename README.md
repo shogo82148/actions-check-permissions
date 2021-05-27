@@ -27,3 +27,9 @@ jobs:
         if: steps.check.outputs.permission == 'write'
         run: echo 'something to do'
 ```
+
+## Limitations
+
+The action only checks whether the `GITHUB_TOKEN` has the contents scope permission.
+You can't get any information about other scopes.
+See [Permissions for the `GITHUB_TOKEN`](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token) for details.
