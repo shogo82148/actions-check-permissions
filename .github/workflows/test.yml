@@ -5,7 +5,14 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -14,6 +21,43 @@ jobs:
         name: use the action
         uses: ./
 
-      - name: show the result
+      - name: check the result
+        shell: bash
+        env:
+          PERMISSION: ${{ steps.check.outputs.permission }}
         run: |
-          echo ${{ steps.check.outputs.permission }}
+          if [[ "$PERMISSION" = "read" || "$PERMISSION" = "write" ]]; then
+              echo "ok"
+          else
+              echo "fail"
+          fi
+
+  test-read:
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: check
+        name: use the action
+        uses: ./
+
+      - name: check the result
+        shell: bash
+        env:
+          PERMISSION: ${{ steps.check.outputs.permission }}
+        run: |
+          if [[ "$PERMISSION" = "read" ]]; then
+              echo "ok"
+          else
+              echo "fail"
+          fi
