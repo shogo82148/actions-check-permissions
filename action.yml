@@ -13,7 +13,8 @@ runs:
   using: "composite"
   steps:
     - id: check
-      run: ${{ github.action_path }}/check.sh
+      run: ./check.sh
       shell: bash
+      working-directory: ${{ github.action_path }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
