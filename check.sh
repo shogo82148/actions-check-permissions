@@ -21,7 +21,7 @@ echo "the returned status code is $STATUS_CODE"
 
 if [[ "$STATUS_CODE" != "200" ]]
 then
-    echo "::set-output name=permission::none"
+    echo "permission=none" >> "$GITHUB_OUTPUT"
     echo "::endgroup::"
     echo "the permission is none"
     exit 0
@@ -50,9 +50,9 @@ echo "::endgroup::"
 
 if [[ "$STATUS_CODE" == "201" && "$SHA" == "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391" ]]
 then
-    echo "::set-output name=permission::write"
+    echo "permission=write" >> "$GITHUB_OUTPUT"
     echo "the permission is write"
 else
-    echo "::set-output name=permission::read"
+    echo "permission=read" >> "$GITHUB_OUTPUT"
     echo "the permission is read"
 fi
